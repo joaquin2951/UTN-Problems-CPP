@@ -1,62 +1,123 @@
 #include <iostream>
-#include "hora.h"
+#include "cuenta.h"
+#include <windows.h>
+
+#define MAXcli 2
 
 using namespace std;
 
-#define cantEventos 3
 
-struct Evento{
-	string nombreEvento;
-	int duracionEstimadaEnMinutos;
-};
-
-void cargarEvento(Evento & e, string nombre, int duracion);
 
 int main()
 {
 	
-
-	Evento eventos[cantEventos];
-	Hora inicioPrimerEvento;
+	Cuenta clientes[MAXcli];
 	
-	cargarEvento(eventos[0],"Evento 1", 120);
-	cargarEvento(eventos[1],"Evento 2", 120);
-	cargarEvento(eventos[2],"Evento 3", 120);
+	int tl_cli = 0;
+	char option;
 	
-	inicioPrimerEvento = ponerAHora(12,00,00);
+	/*
+	Inicializar_Cuenta(clientes[0]);
 	
-	for(int event = 0; event < cantEventos; event++)
+	Depositar(clientes[0],500.20);
+	
+	Extraer(clientes[0],700);
+	Extraer(clientes[0],222.33);
+	
+	
+	ConsultarUltimosMov(clientes[0]);
+	
+	*/
+	
+	while(option != 'X')
 	{
-		cout << eventos[event].nombreEvento << endl;
-		cout << "Inicio: "; mostrar12(inicioPrimerEvento);
-		adelantar(inicioPrimerEvento,eventos[event].duracionEstimadaEnMinutos);
-		cout << "Fin: "; mostrar12(inicioPrimerEvento); 
+		
+		system("cls");
+		
+		cout << "1. Inicializar Cliente" << endl;
+		cout << "2. Depositar" << endl;
+		cout << "3. Extraer" << endl;
+		cout << "4. Consultar Saldo" << endl;
+		cout << "5. Consultar Ultimos Mov" << endl;
+		
+		cin >> option;
+		int d;
+		
+		switch(option)
+		{
+		case '1': if(tl_cli < MAXcli)
+		{
+			Inicializar_Cuenta(clientes[tl_cli]);
+			tl_cli++;
+		}
+		else 
+								 cout << "No se pueden crear mas clientes."; 
+		break;
+		
+		case '2': 
+			
+			cout << "En que numero de cliente depositar? ";
+			cin >> d;
+			if(d < tl_cli){
+				float monto;
+				cout << "Monto? "; cin >> monto;
+				Depositar(clientes[d], monto);
+			}
+			else
+				 cout << "no existe ese cliente." << endl;
+			break;
+			
+			
+		case '3': 
+			
+			cout << "En que numero de cliente extraer? ";
+			cin >> d;
+			if(d < tl_cli){
+				float monto;
+				cout << "Monto? "; cin >> monto;
+				Extraer(clientes[d], monto);
+			}
+			else
+				 cout << "no existe ese cliente." << endl;
+			break;
+			
+			
+		case '4': 
+			
+			cout << "En que numero de cliente ver saldo? ";
+			cin >> d;
+			if(d < tl_cli)
+				mostrarSaldo(clientes[d]);
+			else
+				cout << "no existe ese cliente." << endl;
+			break;
+			
+			
+		case '5':
+			
+			cout << "En que numero de cliente consultar mov? ";
+			cin >> d;
+			if(d < tl_cli){
+				ConsultarUltimosMov(clientes[d]);
+			}
+			else
+				 cout << "no existe ese cliente." << endl;
+			break;
+			
+			
+		}
+		
+		
+		system("pause");
+		
 	}
 	
 	
 	
-	/*
-	Hora h1, h2;
 	
-	h1 = ponerAHora(6,30,50);
-	h2 = ponerAHora(13,55,50);
 	
-	mostrar12(h2); 	mostrar24(h2);
-
-	adelantar(h2,130);
-	atrasar(h1,100);
 	
-	mostrar12(h2); mostrar12(h1);
-	
-	cout << diferenciaEnMinutos(h1,h2) << " min" << endl;
-	cout << diferenciaEnSegundos(h1,h2) << " seg" << endl;
-	*/
 	
 	
 	return 0;
-}
-
-void cargarEvento(Evento & e, string nombre, int duracion){
-	e.nombreEvento = nombre;
-	e.duracionEstimadaEnMinutos = duracion;
 }
