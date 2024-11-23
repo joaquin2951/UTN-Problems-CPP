@@ -14,6 +14,7 @@ void mostrar_lista(NodoListaPtr startPtr);
 void insertar_rec(NodoListaPtr * startPtr, int elemento);
 bool eliminar(NodoListaPtr * startPtr, int elemento);
 bool estaEnLista(NodoListaPtr startPtr, int elementoBuscado);
+bool vacia(NodoListaPtr startPtr);
 
 int main(int argc, char *argv[]) {
 
@@ -93,18 +94,34 @@ int main(int argc, char *argv[]) {
 	
 	mostrar_lista(startPtr3);
 	
+	
+	//pruebo eliminar con una lista vacía
+	NodoListaPtr listaNueva = NULL;
+	if(eliminar(&listaNueva,3))
+		cout << "Eliminado elemento de la listaNueva";
+	else
+		cout << "No hay nada que borrar";
+	
 	return 0;
+}
+
+bool vacia(NodoListaPtr startPtr)
+{
+	return startPtr == NULL;
 }
 
 
 bool eliminar(NodoListaPtr * startPtr, int elemento)
 {
 
+	
 	NodoListaPtr actual;
 	NodoListaPtr anterior;
 	NodoListaPtr temp;
 	
 	bool eliminado;
+	
+	if(!vacia(*startPtr)){
 		
 		if( (*startPtr)->info == elemento)
 		{
@@ -136,7 +153,9 @@ bool eliminar(NodoListaPtr * startPtr, int elemento)
 			eliminado = true;
 		}
 		}
-		
+	}
+	else
+		eliminado = false;
 		
 	return eliminado;
 }

@@ -65,10 +65,6 @@ void ordenar(NodoListaPtr * startPtr)
 		}
 	}
 	
-	
-	
-	
-	
 }
 
 

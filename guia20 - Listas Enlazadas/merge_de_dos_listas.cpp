@@ -46,8 +46,72 @@ int main(int argc, char *argv[]) {
 	cout << "LISTA 3" << endl;
 	imprimir(lista3);
 	
+	borrar(&lista3,0);
+	borrar(&lista3,200);
+	borrar(&lista3,-33);
+	borrar(&lista3,-1);
+	
+	imprimir(lista3);
+	
 	
 	return 0;
+}
+
+
+void borrar(NodoListaPtr * startPtr, int valor)
+{
+	
+	NodoListaPtr temp;
+	
+	
+	if(*startPtr == NULL)
+	{
+		cout << "LISTA VACIA, NADA QUE BORRAR" << endl;
+	}
+	else if( (*startPtr)->siguiente == NULL )
+		{
+			if( (*startPtr)->info == valor )
+			{
+				temp = *startPtr;
+				*startPtr = NULL;
+				delete temp;
+			}
+			else
+				 cout << "EL ELEMENTO NO ESTA EN LA LISTA" << endl;
+		}
+	else
+	{
+		NodoListaPtr actual = *startPtr;
+		NodoListaPtr anterior = NULL;
+		
+		while(actual != NULL && actual->info != valor)
+		{
+			anterior = actual;
+			actual = actual->siguiente;
+		}
+		
+		
+		if(actual == NULL)
+		{
+			cout << "El elemento no está en la lista. " << endl;
+		}
+		else if(anterior == NULL)
+		{
+			temp = actual;
+			*startPtr = actual->siguiente;
+			delete temp;
+		}
+		else if(actual->info == valor)
+		{
+			temp = actual;
+			actual = actual->siguiente;
+			anterior->siguiente = actual;
+			delete temp;
+		}
+		
+	}
+	
+	
 }
 
 void merge(NodoListaPtr lista1, NodoListaPtr lista2, NodoListaPtr * lista3)
